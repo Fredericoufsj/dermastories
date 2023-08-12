@@ -192,9 +192,9 @@ const decisionTree: TreeNode = {
   ]
 };
 
-function App() {
-  const [currentNode, setCurrentNode] = useState<TreeNode>(decisionTree);
-  const [userNiche, setUserNiche] = useState<string>("");
+function App({ initialNode, userNiche: initialUserNiche }: { initialNode?: TreeNode, userNiche: string }) {
+  const [currentNode, setCurrentNode] = useState<TreeNode | undefined>(initialNode);
+  const [userNiche, setUserNiche] = useState<string>(initialUserNiche);
 
   const handleOptionClick = (nextNode: TreeNode) => {
     setCurrentNode(nextNode);
@@ -210,7 +210,7 @@ function App() {
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="bg-white p-8 rounded-lg shadow-lg">
         <h1 className="text-2xl font-bold mb-4">Bem-vindo ao Dermastories!</h1>
-        {currentNode.question ? (
+        {currentNode?.question ? (
           <>
             <p className="mb-4">{currentNode.question}</p>
             {currentNode === decisionTree ? (
@@ -240,7 +240,7 @@ function App() {
             ) : null}
           </>
         ) : null}
-        {currentNode.result ? (
+        {currentNode?.result ? (
           <p className="mt-4">{currentNode.result.replace(/{name}/g, userNiche)}</p>
         ) : null}
       </div>
@@ -249,7 +249,7 @@ function App() {
 }
 
 App.propTypes = {
-  currentNode: PropTypes.shape({
+  initialNode: PropTypes.shape({
     question: PropTypes.string,
     options: PropTypes.arrayOf(
       PropTypes.shape({
@@ -258,7 +258,7 @@ App.propTypes = {
       })
     ),
     result: PropTypes.string,
-  }).isRequired,
+  }),
   userNiche: PropTypes.string.isRequired,
 };
 
