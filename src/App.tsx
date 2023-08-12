@@ -193,7 +193,7 @@ const decisionTree: TreeNode = {
 };
 
 function App({ initialNode, userNiche: initialUserNiche }: { initialNode?: TreeNode, userNiche: string }) {
-  const [currentNode, setCurrentNode] = useState<TreeNode | undefined>(initialNode);
+  const [currentNode, setCurrentNode] = useState<TreeNode | undefined>(initialNode || decisionTree);
   const [userNiche, setUserNiche] = useState<string>(initialUserNiche);
 
   const handleOptionClick = (nextNode: TreeNode) => {
